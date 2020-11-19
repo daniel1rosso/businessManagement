@@ -1,0 +1,9 @@
+*.png
+*.PNG
+*.pdf
+*.jpeg
+*.jpg
+
+!/uploads
+
+node_modules
