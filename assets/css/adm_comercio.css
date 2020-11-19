@@ -1,0 +1,44 @@
+a:hover{
+    color: #000000;
+}
+
+#logo_menu{
+    background-image: url('../images/logo/logo_WEB.png');
+    background-color: #FFF;
+    height: 87px;
+    background-repeat: no-repeat;
+    background-size: 80%;
+    background-position: center;    
+}
+
+.label-tarjeta{
+    /*color: #4B5665;*/
+    color: #F44336;
+    text-transform: uppercase;
+    margin-top: 15px;
+    text-align: right;
+    width: 100%;
+}
+
+.erroBoxs{
+    padding-left: 4px;
+    border-radius: 4px;
+    margin-top: 5px;
+    font-size: 0.8em;
+}
+
+/*--- Footer ---*/
+#logoFooterCR{
+    width:35px;
+    margin-left:-40px;
+    margin-top: 2px;
+
+    /*width:25px;*/
+    /*margin-left:-25px;*/
+    /*margin-top:-5px;*/
+    position:absolute;
+}
+
+#footerTSoft a{
+    color:#154994;
+}

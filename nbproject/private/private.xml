@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="6">
+        <file>
+            <url>services/application/models/app_model.php</url>
+            <bookmark id="1">
+                <name/>
+                <line>2178</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>services/application/controllers/notas_credito_debito.php</url>
+            <bookmark id="2">
+                <name/>
+                <line>976</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>services/application/controllers/proveedores.php</url>
+            <bookmark id="4">
+                <name/>
+                <line>125</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>assets/js/coreAdmin.js</url>
+            <bookmark id="3">
+                <name/>
+                <line>0</line>
+                <key/>
+            </bookmark>
+            <bookmark id="6">
+                <name/>
+                <line>1844</line>
+                <key/>
+            </bookmark>
+            <bookmark id="5">
+                <name/>
+                <line>2705</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group/>
+    </open-files>
+</project-private>
