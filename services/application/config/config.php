@@ -20,7 +20,7 @@
 if($_SERVER['SERVER_NAME'] == 'localhost') {
     $config['base_url'] = '//localhost/pyme/';
 } else {
-    $config['base_url'] = '//tsoft.bisoft.com.ar';
+    $config['base_url'] = 'http://24.232.94.248';
 }
 
 

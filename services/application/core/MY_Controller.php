@@ -45,13 +45,10 @@ class MY_Controller extends CI_Controller {
         $data['url'] = base_url();
         $data['CI'] = & get_instance();
         $data['anioFooter'] = date('Y');
-//        $data['title'] = 'COPA PYMES - ADMIN';	
-        $data['title'] = 'BiSoft';
+        $data['title'] = 'MYPYME';
         $userdata = $this->session->all_userdata();
 
         if (!$this->is_login() || $userdata['idNivel'] == 6) {
-            $this->load->view('templates/head_login', $data);
-            $this->load->view('login', $data);
             return false;
         }
 
@@ -118,214 +115,9 @@ class MY_Controller extends CI_Controller {
             }
 
             $data['user'] = $this->session->all_userdata();
-            $this->load->view('templates/head', $data);
-            $this->load->view('templates/modales/modales');
-            
+
             //-- Modales de Importacion --//
-            $this->load->view('templates/modales/modales_importarXLS');
-            
-            
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/menu', $data);
             $this->load->view($view, $data);
-            $this->load->view('templates/footer', $data);
-        }
-    }
-
-    //--- WEB - PUBLICO ---//
-    public function load_view_public($view, $data = '') {
-        $data['url'] = base_url();
-        $data['anioFooter'] = date('Y');
-        $data['title'] = 'COPA PYMES - WEB';
-        $data['userdata'] = $this->session->all_userdata();
-        $userdata = $this->session->all_userdata();
-
-        $this->data['active'] = 'inicio';
-
-        $this->load->view('templates_publico/head', $data);
-        $this->load->view('templates_publico/modales/modales');
-        $this->load->view('templates_publico/header', $data);
-        $this->load->view('templates_publico/menu', $data);
-        $this->load->view($view, $data);
-        $this->load->view('templates_publico/footer', $data);
-    }
-
-    //--- ADMIN WEB - PUBLICO ---//
-    public function load_view_public_admin($view, $data = '') {
-        $data['url'] = base_url();
-        $data['anioFooter'] = date('Y');
-        $data['title'] = 'COPA PYMES - USUARIO';
-        $data['userdata'] = $this->session->all_userdata();
-        $userdata = $this->session->all_userdata();
-
-        if (!$this->is_login() OR $userdata['idNivel'] != 6) {
-            $this->load->view('templates_publico_admin/head_login', $data);
-            $this->load->view('login_public', $data);
-            return false;
-        }
-
-        if ($view == 'login_public' AND ! $this->is_login() AND $userdata['idNivel'] != 6) {
-            $this->load->view('templates_publico_admin/head_login', $data);
-            $this->load->view($view, $data);
-        } else if ($view == 'login_public' AND $this->is_login() AND $userdata['idNivel'] == 6) {
-            redirect('/dashboard_public');
-        } else if ($this->is_login() AND $userdata['idNivel'] == 6) {
-            $data['user'] = $this->session->all_userdata();
-            $this->load->view('templates_publico_admin/head', $data);
-            $this->load->view('templates_publico_admin/modales/modales');
-            $this->load->view('templates_publico_admin/header', $data);
-            $this->load->view('templates_publico_admin/menu', $data);
-            $this->load->view($view, $data);
-            $this->load->view('templates_publico_admin/footer', $data);
-        }
-    }
-
-    //--- FORMULARIOS ---//
-    public function datosFormCuentaTesoreria() {
-        $tipo_cuentas_tesoreria = $this->app_model->get_tesoreria_tipo_cuenta();
-        if ($tipo_cuentas_tesoreria) {
-            foreach ($tipo_cuentas_tesoreria as $key => $value) {
-                $this->data['tipo_cuentas_tesoreria'][$key]['idTipoCuenta'] = $value['idTipoCuenta'];
-                $this->data['tipo_cuentas_tesoreria'][$key]['descripcion'] = $value['descripcion'];
-            }
-        }
-    }
-
-    public function datosFormCliente() {
-        $sexo = $this->app_model->get_sexo();
-        if ($sexo) {
-            foreach ($sexo as $key => $value) {
-                $this->data['sexo'][$key]['idSexo'] = $value['idSexo'];
-                $this->data['sexo'][$key]['cod'] = $value['cod'];
-                $this->data['sexo'][$key]['tipo'] = $value['tipo'];
-            }
-        }
-
-        $estado_civil = $this->app_model->get_estado_civil();
-        if ($estado_civil) {
-            foreach ($estado_civil as $key => $value) {
-                $this->data['estado_civil'][$key]['idCivil'] = $value['idCivil'];
-                $this->data['estado_civil'][$key]['cod'] = $value['cod'];
-                $this->data['estado_civil'][$key]['estado'] = $value['estado'];
-            }
-        }
-
-        $categorias_ventas = $this->app_model->get_categorias_ventas();
-        if ($categorias_ventas) {
-            foreach ($categorias_ventas as $key => $value) {
-                $this->data['categorias_ventas'][$key]['idCategoriaVentas'] = $value['idCategoriaVentas'];
-                $this->data['categorias_ventas'][$key]['descripcion'] = $value['descripcion'];
-            }
-        }
-
-        $documentos_tipos = $this->app_model->get_documentos_tipos();
-        if ($documentos_tipos) {
-            foreach ($documentos_tipos as $key => $value) {
-                $this->data['documentos_tipos'][$key]['idTipoDocumento'] = $value['idTipoDocumento'];
-                $this->data['documentos_tipos'][$key]['descripcion'] = $value['descripcion'];
-            }
-        }
-
-        $iva_condiciones = $this->app_model->get_iva_condiciones();
-        if ($iva_condiciones) {
-            foreach ($iva_condiciones as $key => $value) {
-                $this->data['iva_condiciones'][$key]['idCondicionIva'] = $value['idCondicionIva'];
-                $this->data['iva_condiciones'][$key]['descripcion'] = $value['descripcion'];
-            }
-        }
-
-        $comprobantes_tipos = $this->app_model->get_comprobantes_tipos();
-        if ($comprobantes_tipos) {
-            foreach ($comprobantes_tipos as $key => $value) {
-                $this->data['comprobantes_tipos'][$key]['idTipoComprobante'] = $value['idTipoComprobante'];
-                $this->data['comprobantes_tipos'][$key]['descripcion'] = $value['descripcion'];
-            }
-        }
-
-        $provincias = $this->app_model->get_provincias();
-        if ($provincias) {
-            foreach ($provincias as $key => $value) {
-                $this->data['provincias'][$key]['idProvincia'] = $value['idProvincia'];
-                $this->data['provincias'][$key]['provincia'] = $value['provincia'];
-            }
-        }
-    }
-
-    public function datosFormProveedores() {
-        $sexo = $this->app_model->get_sexo();
-        if ($sexo) {
-            foreach ($sexo as $key => $value) {
-                $this->data['sexo'][$key]['idSexo'] = $value['idSexo'];
-                $this->data['sexo'][$key]['cod'] = $value['cod'];
-                $this->data['sexo'][$key]['tipo'] = $value['tipo'];
-            }
-        }
-
-        $estado_civil = $this->app_model->get_estado_civil();
-        if ($estado_civil) {
-            foreach ($estado_civil as $key => $value) {
-                $this->data['estado_civil'][$key]['idCivil'] = $value['idCivil'];
-                $this->data['estado_civil'][$key]['cod'] = $value['cod'];
-                $this->data['estado_civil'][$key]['estado'] = $value['estado'];
-            }
-        }
-
-        $categorias_compras = $this->app_model->get_categorias_compras();
-        if ($categorias_compras) {
-            foreach ($categorias_compras as $key => $value) {
-                $this->data['categorias_compras'][$key]['idCategoriaCompras'] = $value['idCategoriaCompras'];
-                $this->data['categorias_compras'][$key]['descripcion'] = $value['descripcion'];
-            }
-        }
-
-        $documentos_tipos = $this->app_model->get_documentos_tipos();
-        if ($documentos_tipos) {
-            foreach ($documentos_tipos as $key => $value) {
-                $this->data['documentos_tipos'][$key]['idTipoDocumento'] = $value['idTipoDocumento'];
-                $this->data['documentos_tipos'][$key]['descripcion'] = $value['descripcion'];
-            }
-        }
-
-        $iva_condiciones = $this->app_model->get_iva_condiciones();
-        if ($iva_condiciones) {
-            foreach ($iva_condiciones as $key => $value) {
-                $this->data['iva_condiciones'][$key]['idCondicionIva'] = $value['idCondicionIva'];
-                $this->data['iva_condiciones'][$key]['descripcion'] = $value['descripcion'];
-            }
-        }
-
-        $comprobantes_tipos = $this->app_model->get_comprobantes_tipos();
-        if ($comprobantes_tipos) {
-            foreach ($comprobantes_tipos as $key => $value) {
-                $this->data['comprobantes_tipos'][$key]['idTipoComprobante'] = $value['idTipoComprobante'];
-                $this->data['comprobantes_tipos'][$key]['descripcion'] = $value['descripcion'];
-            }
-        }
-
-        $provincias = $this->app_model->get_provincias();
-        if ($provincias) {
-            foreach ($provincias as $key => $value) {
-                $this->data['provincias'][$key]['idProvincia'] = $value['idProvincia'];
-                $this->data['provincias'][$key]['provincia'] = $value['provincia'];
-            }
-        }
-    }
-
-    public function datosFormProductos() {
-        $proveedores = $this->app_model->get_proveedores();
-        if ($proveedores) {
-            foreach ($proveedores as $key => $value) {
-                $this->data['proveedores'][$key]['idProveedor'] = $value['idProveedor'];
-                $this->data['proveedores'][$key]['nombre'] = $value['nombre'];
-            }
-        }
-
-        $iva_tipos = $this->app_model->get_iva_tipos();
-        if ($iva_tipos) {
-            foreach ($iva_tipos as $key => $value) {
-                $this->data['iva_tipos'][$key]['idIva'] = $value['idIva'];
-                $this->data['iva_tipos'][$key]['descripcion'] = $value['descripcion'];
-            }
         }
     }
 
@@ -340,8 +132,8 @@ class MY_Controller extends CI_Controller {
             'title' => $titulo,
             'sound' => "default",
             'color' => "#203E78",
-            'largeIcon' => 'http://pymes.bisoft.com.ar/assets/images/logos/logo.png',
-            'smallIcon' => 'http://pymes.bisoft.com.ar/assets/images/logos/logo.png'
+            'largeIcon' => 'http://24.232.94.248/assets/images/logos/logo.png',
+            'smallIcon' => 'http://24.232.94.248/assets/images/logos/logo.png'
         );
 
         $fcmFields = array(

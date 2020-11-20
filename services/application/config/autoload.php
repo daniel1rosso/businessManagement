@@ -109,7 +109,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('app_model','app_model_bar','app_model_importarxls');
+$autoload['model'] = array('app_model_user');
 
 /* End of file autoload.php */
 /* Location: ./application/config/autoload.php */
