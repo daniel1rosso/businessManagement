@@ -31,7 +31,7 @@ class Usuarios_backend extends MY_Controller {
                 
             } else {
                 
-                $result = $this->app_model_user->compare_user_password($username, md5($password));
+                $result = $this->app_model_user->compare_username_password($username, md5($password));
 
                 if($result) {
 
