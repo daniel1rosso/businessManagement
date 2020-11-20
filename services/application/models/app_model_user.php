@@ -6,10 +6,10 @@ if (!defined('BASEPATH')) {
 
 class App_model_user extends CI_Model
 {
-    public function compare_user_password($user, $password)
+    public function compare_username_password($username, $password)
     {
         $values = array(
-            'usuario' => $user,
+            'usuario' => $username,
             'password' => $password
         );
         $this->db->where($values);
