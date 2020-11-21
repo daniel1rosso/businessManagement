@@ -24,39 +24,34 @@ class Usuarios_backend extends MY_Controller {
             $username = $request->username;
             $password = $request->password;
 
-            if(isset($username) || isset($password)) {
+            $pepper = "c1isvFdxMDdmjOlvxpecFw";
+            $pwd_peppered = hash_hmac("sha256", $password, $pepper);
+            
+            $result = $this->app_model_user->compare_username_password($username, $pwd_peppered);
 
-                $dato['msg'] = "Usuario o contraseña vacio";
-                $dato['valid'] = false;
-                
+            if($result) {
+
+                $user_session = array(
+                    'nombreCompleto' => $result[0]['nombreCompleto'],
+                    'apellido' => $result[0]['apellido'],
+                    'email' => $result[0]['email'],
+                    'telefono' => $result[0]['telefono'],
+                    'user' => $result[0]['usuario'],
+                    'logged_in' => true
+                );
+
+                $this->session->set_userdata($user_session);
+                $this->userdata = $user_session;
+
+                $dato['msg'] = "Login success";
+                $dato['valid'] = true;
+                $dato['user_session'] = $user_session;
+
             } else {
-                
-                $result = $this->app_model_user->compare_username_password($username, md5($password));
-
-                if($result) {
-
-                    $user_session = array(
-                        'nombreCompleto' => $result[0]['nombreCompleto'],
-                        'apellido' => $result[0]['apellido'],
-                        'email' => $result[0]['email'],
-                        'telefono' => $result[0]['telefono'],
-                        'user' => $result[0]['usuario'],
-                        'logged_in' => true
-                    );
-
-                    $this->session->set_userdata($user_session);
-                    $this->userdata = $user_session;
-
-                    $dato['msg'] = "Usuario y contraseña";
-                    $dato['valid'] = true;
-                    $dato['user_session'] = $user_session;
-
-                } else {
-                    $dato['msg'] = "Usuario o contraseña incorrecta";
-                    $dato['valid'] = false;
-                }
-
+                $dato['msg'] = "Usuario ó contraseña incorrecta";
+                $dato['valid'] = false;
             }
+
         } else {
             $dato['msg'] = "No hay post";
             $dato['valid'] = false;
