@@ -43,9 +43,12 @@ class Usuarios_backend extends MY_Controller {
                 $this->session->set_userdata($user_session);
                 $this->userdata = $user_session;
 
+                $userdata = $this->session->all_userdata();
+
                 $dato['msg'] = "Login success";
                 $dato['valid'] = true;
                 $dato['user_session'] = $user_session;
+                $dato['userdata'] = $userdata;
 
             } else {
                 $dato['msg'] = "Usuario ó contraseña incorrecta";
