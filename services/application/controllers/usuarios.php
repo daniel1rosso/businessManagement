@@ -28,7 +28,7 @@ class Usuarios extends MY_Controller {
             $pepper = "c1isvFdxMDdmjOlvxpecFw";
             $pwd_peppered = hash_hmac("sha256", $password, $pepper);
             //--- user validation ---//
-            $result = $this->app_model_user_user->compare_username_password($username, $pwd_peppered);
+            $result = $this->app_model_user->compare_username_password($username, $pwd_peppered);
 
             if($result) {
                 //--- Data the user_session ---//
@@ -84,7 +84,7 @@ class Usuarios extends MY_Controller {
 
     public function list_users() {
         //--- List users ---//
-        $result = $this->app_model_user_user->list_users();
+        $result = $this->app_model_user->list_users();
 
         if($result) {
             //--- Reply ---//
@@ -132,22 +132,22 @@ class Usuarios extends MY_Controller {
                 $pepper = "c1isvFdxMDdmjOlvxpecFw";
                 $pwd_peppered = hash_hmac("sha256", $password, $pepper);
                 //--- Add user to database ---//
-                $result = $this->app_model_user_user->add_usuario($idProvincia, $idLocalidad, $nombre, $apellido, $nombreUsuario, $pwd_peppered, $nivel, $email, $telefono, $idGeneradoUsuarioMenuAdmin);
+                $result = $this->app_model_user->add_usuario($idProvincia, $idLocalidad, $nombre, $apellido, $nombreUsuario, $pwd_peppered, $nivel, $email, $telefono, $idGeneradoUsuarioMenuAdmin);
                 //--- Get new user ---//
-                $idUsuario = $this->app_model_user_user->get_usuario_by_idGeneradoUsuarioMenuAdmin($idGeneradoUsuarioMenuAdmin);
+                $idUsuario = $this->app_model_user->get_usuario_by_idGeneradoUsuarioMenuAdmin($idGeneradoUsuarioMenuAdmin);
                 $idUsuario = $idUsuario[0]['idUsuario'];
 
                 //--- Verificamos que sea mozo o vendedor ---//
                 if (intval($nivel) == 9 || intval($nivel) == 10) {
                     //--- Agregado de la cuenta de tesoreria (caja chica al vendedor o mozo) ---//
-                    $this->app_model_user_user->insert_tesoreria_cuentas($idGenCuenta, $idUsuario, 1, $nombreUsuario, 4);
+                    $this->app_model_user->insert_tesoreria_cuentas($idGenCuenta, $idUsuario, 1, $nombreUsuario, 4);
                 }
 
                 //--- Assign menu ---//
                 if (count($menu) > 0) {
                     $menu_add = true;
                     foreach ($menu as $values) {
-                        $this->app_model_user_user->add_menu_usuario($idUsuario, $values);
+                        $this->app_model_user->add_menu_usuario($idUsuario, $values);
                     }
                 } else {
                     $menu_add = false;
@@ -230,7 +230,7 @@ class Usuarios extends MY_Controller {
                 if (count($menu) > 0) {
                     $menu_add = true;
                     foreach ($menu as $values) {
-                        $this->app_model_user_user->add_menu_usuario($idUsuario, $values);
+                        $this->app_model_user->add_menu_usuario($idUsuario, $values);
                     }
                 } else {
                     $menu_add = false;
@@ -272,7 +272,7 @@ class Usuarios extends MY_Controller {
             $idUsuario = $request->idUsuario;
 
             //--- Delete user ---//
-            $result = $this->app_model_user_user->delete_user($idUsuario);
+            $result = $this->app_model_user->delete_user($idUsuario);
 
             if($result) {
                 //--- Reply ---//
