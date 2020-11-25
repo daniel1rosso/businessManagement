@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Usuarios extends MY_Controller {
+class Usuario extends MY_Controller {
 
     public function __construct() {
         parent::__construct();
@@ -72,6 +72,11 @@ class Usuarios extends MY_Controller {
     }
 
     public function logout() {
+        
+        header('Content-type: application/json');
+        header("Access-Control-Allow-Origin: *");
+        header('Access-Control-Allow-Headers: X-Requested-With, content-type, access-control-allow-origin,access-control-allow-methods, access-control-allow-headers');
+
         //--- Detroy session ---//
         $this->session->sess_destroy();
         
@@ -83,6 +88,11 @@ class Usuarios extends MY_Controller {
     }
 
     public function list_users() {
+        
+        header('Content-type: application/json');
+        header("Access-Control-Allow-Origin: *");
+        header('Access-Control-Allow-Headers: X-Requested-With, content-type, access-control-allow-origin,access-control-allow-methods, access-control-allow-headers');
+
         //--- List users ---//
         $result = $this->app_model_user->list_users();
 
@@ -122,7 +132,7 @@ class Usuarios extends MY_Controller {
             $password = $request->password;
             $email = $request->email;
             $telefono = $request->telefono;
-            $menu = json_decode($request->idMenu);
+            $menu = json_decode($request->menu);
             $idGeneradoUsuarioMenuAdmin = $this->generarID();
             $idGenCuenta = $this->generarID();
 
@@ -195,7 +205,7 @@ class Usuarios extends MY_Controller {
             $password = $request->password;
             $email = $request->email;
             $telefono = $request->telefono;
-            $menu = json_decode($request->idMenu);
+            $menu = json_decode($request->menu);
 
             //--- Validate data ---//
             if (!empty($idUsuario) && !empty($telefono) && !empty($email) && !empty($idLocalidad) && !empty($idProvincia) && !empty($nombre) && !empty($apellido) && !empty($nombreUsuario) && !empty($password) && !empty($nivel)) {
@@ -260,7 +270,7 @@ class Usuarios extends MY_Controller {
         header('Content-type: application/json');
         header("Access-Control-Allow-Origin: *");
         header('Access-Control-Allow-Headers: X-Requested-With, content-type, access-control-allow-origin,access-control-allow-methods, access-control-allow-headers');
-        
+
         //--- Guardo ---//
         $postdata = file_get_contents("php://input");
         $request  = json_decode($postdata);
@@ -271,20 +281,24 @@ class Usuarios extends MY_Controller {
             //--- Data ---//
             $idUsuario = $request->idUsuario;
 
-            //--- Delete user ---//
-            $result = $this->app_model_user->delete_user($idUsuario);
+            if (!empty($idUsuario) {
+                //--- Delete user ---//
+                $result = $this->app_model_user->delete_user($idUsuario);
 
-            if($result) {
-                //--- Reply ---//
-                $dato['msg'] = "Delete user success";
-                $dato['valid'] = true;
-                $dato['users'] = $result;
+                if($result) {
+                    //--- Reply ---//
+                    $dato['msg'] = "Delete user success";
+                    $dato['valid'] = true;
+                    $dato['users'] = $result;
+                } else {
+                    $dato['msg'] = "Error deleting user";
+                    $dato['valid'] = false;
+                    $dato['users'] =  [];
+                }
             } else {
-                $dato['msg'] = "Error deleting user";
-                $dato['valid'] = false;
-                $dato['users'] =  [];
+                $msg = "Minimal data is missing";
+                $dato = array("valid" => false, "msg" => $msg);
             }
-
         } else {
             $dato['msg'] = "There is not post";
             $dato['valid'] = false;
