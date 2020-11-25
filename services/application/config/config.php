@@ -17,12 +17,7 @@
 |
 */
 
-if($_SERVER['SERVER_NAME'] == 'localhost') {
-    $config['base_url'] = '//localhost/pyme/';
-} else {
-    $config['base_url'] = 'http://24.232.94.248';
-}
-
+$config['base_url'] = '//localhost/pyme_backend/';
 
 /*
 |--------------------------------------------------------------------------
