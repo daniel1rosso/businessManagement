@@ -281,7 +281,7 @@ class Usuario extends MY_Controller {
             //--- Data ---//
             $idUsuario = $request->idUsuario;
 
-            if (!empty($idUsuario) {
+            if (!empty($idUsuario)) {
                 //--- Delete user ---//
                 $result = $this->app_model_user->delete_user($idUsuario);
 
